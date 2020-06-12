@@ -22,3 +22,6 @@ Quando terminarem, atualizem o repositório de vocês e mandem o link lá no gru
 (Obs.: não precisam dar pull request, afinal, só tenho 1 repositório! haha)
 
 Espero que gostem e aguardo o link de vocês! =D
+
+## Update!
+Criei 2 branches e publiquei lá minhas soluções em MobX e em BLoC! Quaisquer sugestões e críticas são bem-vindas!
