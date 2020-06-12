@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'keyboard_controller.dart';
+import 'keyboard_bloc.dart';
 
 class KeyboardWidget extends StatelessWidget {
-  final KeyboardController controller = Modular.get<KeyboardController>();
+  final KeyboardBloc bloc = Modular.get<KeyboardBloc>();
   final ValueChanged<double> onValueUpdated;
   final bool reset;
 
   KeyboardWidget({Key key, this.onValueUpdated, this.reset}) : super(key: key) {
     if (this.reset) {
-      controller.reset();
+      bloc.reset();
     }
   }
 
@@ -24,12 +24,12 @@ class KeyboardWidget extends StatelessWidget {
         crossAxisSpacing: 0,
         mainAxisSpacing: 0,
         physics: NeverScrollableScrollPhysics(),
-        children: controller.keys
+        children: bloc.keys
             .map(
               (e) => InkWell(
                 onTap: () {
-                  controller.keyPressAction(e);
-                  this.onValueUpdated(controller.partialTotal);
+                  bloc.keyPressAction(e);
+                  this.onValueUpdated(bloc.partialTotal);
                 },
                 child: Center(
                   child: e.runtimeType == String

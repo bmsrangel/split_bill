@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/widgets/card/card_widget.dart';
 import '../../shared/widgets/custom_app_bar/custom_app_bar_widget.dart';
-import 'result_controller.dart';
+import 'result_bloc.dart';
 import 'widgets/individual_values/individual_values_widget.dart';
 
 class ResultPage extends StatefulWidget {
@@ -15,11 +14,12 @@ class ResultPage extends StatefulWidget {
   _ResultPageState createState() => _ResultPageState();
 }
 
-class _ResultPageState extends ModularState<ResultPage, ResultController> {
-  //use 'controller' variable to access controller
+class _ResultPageState extends State<ResultPage> {
+  final ResultBloc bloc = Modular.get<ResultBloc>();
+
   @override
   void initState() {
-    controller.setSplittedValue();
+    bloc.setSplittedValue();
     super.initState();
   }
 
@@ -32,7 +32,7 @@ class _ResultPageState extends ModularState<ResultPage, ResultController> {
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
-            onPressed: controller.reset,
+            onPressed: bloc.reset,
           )
         ],
       ),
@@ -45,23 +45,19 @@ class _ResultPageState extends ModularState<ResultPage, ResultController> {
             CardWidget(
               title: "EQUALLY DIVIDED",
               color: Color(0xFF13AA4E),
-              billValue: controller.cardInfo.billValue,
-              friendsNumber: controller.cardInfo.friendsAmount,
-              tips: controller.cardInfo.tips,
-              tipsAmount: controller.cardInfo.tipsAmount,
-              totalAmount: controller.splittedValue.toDouble(),
+              billValue: Stream.value(bloc.cardInfo.billValue),
+              friendsNumber: Stream.value(bloc.cardInfo.friendsAmount),
+              tips: Stream.value(bloc.cardInfo.tips),
+              tipsAmount: Stream.value(bloc.cardInfo.tipsAmount),
+              totalAmount: bloc.outSplittedValue,
             ),
             const SizedBox(height: 25),
-            Observer(
-              builder: (_) {
-                return IndividualValuesWidget(
-                  friendsNumber: controller.cardInfo.friendsAmount,
-                  totalAmount: controller.cardInfo.totalAmount.round(),
-                  individualValues: controller.individualValues,
-                  onChanged: (value) => controller.setIndividualValues(value),
-                  isResetPressed: controller.isResetPressed,
-                );
-              },
+            IndividualValuesWidget(
+              friendsNumber: bloc.cardInfo.friendsAmount,
+              totalAmount: bloc.cardInfo.totalAmount.round(),
+              individualValues: bloc.outIndividualValues,
+              isResetPressed: bloc.outIsResetPressed,
+              onChanged: (value) => bloc.setIndividualValues(value),
             )
           ],
         ),

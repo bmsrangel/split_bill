@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TotalWidget extends StatelessWidget {
   final TextStyle detailsStyle;
-  final double totalAmount;
+  final Stream<double> totalAmount;
   final String title;
 
   const TotalWidget(
@@ -24,13 +24,18 @@ class TotalWidget extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
           const SizedBox(height: 2),
-          Text(
-            "\$${this.totalAmount?.toStringAsFixed(2) ?? 0.toStringAsFixed(2)}",
-            style: this.detailsStyle.copyWith(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w500,
-                  height: 1.2,
-                ),
+          StreamBuilder<double>(
+            stream: this.totalAmount,
+            builder: (context, snapshot) {
+              return Text(
+                "\$${snapshot.data?.toStringAsFixed(2) ?? 0.toStringAsFixed(2)}",
+                style: this.detailsStyle.copyWith(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w500,
+                      height: 1.2,
+                    ),
+              );
+            },
           ),
         ],
       ),

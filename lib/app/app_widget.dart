@@ -6,7 +6,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: Modular.navigatorKey,
-      title: 'Split Bill',
+      title: 'Flutter Slidy',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         primaryIconTheme: IconThemeData(

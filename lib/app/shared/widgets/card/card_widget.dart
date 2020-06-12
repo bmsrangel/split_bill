@@ -5,11 +5,11 @@ import '../total/total_widget.dart';
 import '../transparent_triangle/transparent_triangle_widget.dart';
 
 class CardWidget extends StatelessWidget {
-  final double totalAmount;
-  final int friendsNumber;
-  final int tipsAmount;
-  final double tips;
-  final double billValue;
+  final Stream<int> friendsNumber;
+  final Stream<int> tipsAmount;
+  final Stream<double> totalAmount;
+  final Stream<double> tips;
+  final Stream<double> billValue;
   final String title;
   final Color color;
 

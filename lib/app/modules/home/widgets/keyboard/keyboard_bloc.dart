@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-part 'keyboard_controller.g.dart';
-
-class KeyboardController = _KeyboardControllerBase with _$KeyboardController;
-
-abstract class _KeyboardControllerBase with Store {
+class KeyboardBloc extends Disposable {
+  //dispose will be called automatically by closing its streams
   List<dynamic> keys = [
     "1",
     "2",
@@ -48,4 +45,7 @@ abstract class _KeyboardControllerBase with Store {
   void clearInput() {
     this.input = "";
   }
+
+  @override
+  void dispose() {}
 }

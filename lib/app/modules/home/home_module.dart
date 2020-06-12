@@ -1,14 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'home_controller.dart';
+import 'home_bloc.dart';
 import 'home_page.dart';
-import 'widgets/keyboard/keyboard_controller.dart';
+import 'widgets/keyboard/keyboard_bloc.dart';
 
 class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => KeyboardController()),
-        Bind((i) => HomeController()),
+        Bind((i) => KeyboardBloc()),
+        Bind((i) => HomeBloc()),
       ];
 
   @override

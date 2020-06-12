@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 class CardInfoWidget extends StatelessWidget {
   final TextStyle detailsStyle;
-  final double billValue;
-  final int friendsNumber;
-  final int tipsAmount;
-  final double tips;
+  final Stream<double> billValue;
+  final Stream<int> friendsNumber;
+  final Stream<int> tipsAmount;
+  final Stream<double> tips;
 
   const CardInfoWidget({
     Key key,
     @required this.detailsStyle,
-    this.billValue = 0.0,
-    this.friendsNumber = 2,
-    this.tipsAmount = 0,
-    this.tips = 0.0,
+    this.billValue,
+    this.friendsNumber,
+    this.tipsAmount,
+    this.tips,
   }) : super(key: key);
 
   @override
@@ -32,10 +32,14 @@ class CardInfoWidget extends StatelessWidget {
               "FRIENDS",
               style: detailsStyle,
             ),
-            Text(
-              "TIPS(${this.tipsAmount}%)",
-              style: detailsStyle,
-            ),
+            StreamBuilder<int>(
+                stream: this.tipsAmount,
+                builder: (context, snapshot) {
+                  return Text(
+                    "TIPS(${snapshot.data}%)",
+                    style: detailsStyle,
+                  );
+                }),
           ],
         ),
         const SizedBox(width: 10),
@@ -43,18 +47,33 @@ class CardInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "\$${this.billValue.toStringAsFixed(2)}",
-              style: detailsStyle,
+            StreamBuilder<double>(
+              stream: this.billValue,
+              initialData: 0.0,
+              builder: (context, snapshot) {
+                return Text(
+                  "\$${snapshot.data.toStringAsFixed(2)}",
+                  style: detailsStyle,
+                );
+              },
             ),
-            Text(
-              "${this.friendsNumber}",
-              style: detailsStyle,
-            ),
-            Text(
-              "\$${this.tips.toStringAsFixed(2)}",
-              style: detailsStyle,
-            ),
+            StreamBuilder<int>(
+                stream: this.friendsNumber,
+                builder: (context, snapshot) {
+                  return Text(
+                    "${snapshot.data}",
+                    style: detailsStyle,
+                  );
+                }),
+            StreamBuilder<double>(
+                stream: this.tips,
+                initialData: 0.0,
+                builder: (context, snapshot) {
+                  return Text(
+                    "\$${snapshot.data.toStringAsFixed(2)}",
+                    style: detailsStyle,
+                  );
+                }),
           ],
         ),
       ],

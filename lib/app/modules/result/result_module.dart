@@ -1,14 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'result_controller.dart';
+import 'result_bloc.dart';
 import 'result_page.dart';
-import 'widgets/individual_values/individual_values_store.dart';
+import 'widgets/individual_values/individual_values_bloc.dart';
 
 class ResultModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => IndividualValuesStore()),
-        Bind((i) => ResultController(i.args.data)),
+        Bind((i) => IndividualValuesBloc()),
+        Bind((i) => ResultBloc(i.args.data)),
       ];
 
   @override
